@@ -1,0 +1,87 @@
+
+## Requirements
+
+The project requires Python 3.x and the libraries listed in `requirements.txt`. Key dependencies include:
+
+*   pandas
+*   numpy
+*   scikit-learn
+*   xgboost
+*   shap
+*   imbalanced-learn
+*   statsmodels
+*   aif360
+*   matplotlib
+*   seaborn
+*   pickle
+
+## Setup
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone <your-repository-url>
+    cd <repository-directory>
+    ```
+2.  **Create Environment (Recommended):**
+    ```bash
+    python -m venv venv
+    # Activate environment (Linux/macOS)
+    source venv/bin/activate
+    # Activate environment (Windows)
+    .\venv\Scripts\activate
+    ```
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *(Note: AIF360 installation might require specific steps or additional dependencies depending on your system. Refer to the [official AIF360 documentation](https://github.com/Trusted-AI/AIF360) if issues arise.)*
+
+4.  **Download Data:**
+    *   Download the `train.csv` and `test.csv` files from the [American Express - Default Prediction Kaggle competition](https://www.kaggle.com/competitions/amex-default-prediction/data).
+    *   Create a directory named `dataset` in the project's root folder.
+    *   Place the downloaded `train.csv` and `test.csv` files inside the `dataset` folder.
+
+## Usage
+
+1.  **Launch Jupyter Notebook:**
+    ```bash
+    jupyter notebook notebook.ipynb
+    ```
+    *(Replace `notebook.ipynb` with your actual notebook file name if different)*.
+2.  **Run Cells:** Execute the cells sequentially within the Jupyter Notebook to perform data loading, preprocessing, EDA, model training, evaluation, and analysis.
+3.  **Code Execution:** The notebook follows the CRISP-DM methodology, broken down into logical phases as described in the dissertation.
+
+## Methodology Overview
+
+The project follows the CRISP-DM framework:
+1.  **Business Understanding:** Defining the credit default prediction problem and objectives.
+2.  **Data Understanding:** Loading, inspecting, and performing initial EDA on the AMEX dataset.
+3.  **Data Preparation:** Comprehensive cleaning, imputation, transformation, feature engineering, scaling, and encoding.
+4.  **Modeling:** Training Logistic Regression, Decision Tree, and XGBoost; hyperparameter tuning via GridSearchCV.
+5.  **Evaluation:** Assessing models using diverse metrics, cost analysis, interpretability (SHAP), and fairness (AIF360).
+6.  **Deployment:** Saving the best model and conceptualizing a Power BI dashboard.
+
+## Results Summary
+
+*   **Model Performance:** The tuned XGBoost model achieved the highest overall predictive performance on the validation set (Accuracy: 98.68%, ROC-AUC: 0.9995). The tuned Decision Tree also performed well (Accuracy: 97.52%, ROC-AUC: 0.9976) and was more cost-effective under the specific cost scenario emphasizing high penalties for false negatives. Logistic Regression served as a poor baseline on the balanced data.
+*   **Interpretability (SHAP):** For the XGBoost model, `credit_score` and `credit_limit_used` were identified as the most influential features, aligning with domain knowledge.
+*   **Fairness:** A significant bias against the unprivileged group (non-Male) was detected using Disparate Impact (0.51) and Statistical Parity Difference (-0.33). The attempted mitigation using Reweighing did not effectively reduce this bias in the current implementation, highlighting the need for further investigation and potentially different mitigation techniques.
+
+## Power BI Dashboard
+
+Chapter 7 of the accompanying dissertation details the design and insights derived from a conceptual Power BI dashboard built to visualize the project's findings for stakeholders. Screenshots are included in the dissertation's Appendix.
+
+## Future Work
+
+*   Advanced Bias Mitigation techniques.
+*   Expanded Feature Engineering (time-series, external data).
+*   Exploration of alternative models (LightGBM, CatBoost, Deep Learning).
+*   Robustness checks across segments and simulated shifts.
+*   Testing on new geographies and newer datasets.
+*   Causal Inference analysis.
+*   Development of a full MLOps deployment pipeline.
+
+## Author & Supervisor
+
+*   **Author:** Saipoojith Gudipati (StudentId: @00749277)
+*   **Supervisor:** Dr. Tresor Lungu (Lecturer, University of Salford)
